@@ -3,11 +3,8 @@ package user;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
-import ex8.LegoSet;
-import ex8.LegoSetDao;
 
 import java.time.LocalDate;
-import java.time.Year;
 
 public class Main {
 
