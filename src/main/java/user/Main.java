@@ -3,8 +3,11 @@ package user;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import ex8.LegoSet;
+import ex8.LegoSetDao;
 
 import java.time.LocalDate;
+import java.time.Year;
 
 public class Main {
 
@@ -33,26 +36,25 @@ public class Main {
                     .email("sherlockholmes@something.com")
                     .gender(User.Gender.MALE)
                     .dob(LocalDate.parse("1854-01-06"))
-                    .enabled(true)
+                    .enabled(false)
                     .build();
 
             dao.insertUser(user1);
             dao.insertUser(user2);
 
+            System.out.println("The users in the table: ");
             dao.list().stream().forEach(System.out::println);
 
+            System.out.println("Find by ID");
             System.out.println(dao.findById(1).get().toString());
 
+            System.out.println("Find by username");
             System.out.println(dao.findByUsername("holmes").get().toString());
 
             dao.delete(user2);
+            System.out.println("After deleting");
             dao.list().stream().forEach(System.out::println);
 
-            /*dao.insertUser(user1);
-            dao.findById(1).ifPresent(System.out::println);
-            dao.findByUsername("007").ifPresent(System.out::println);
-            dao.list().stream().forEach(System.out::println);
-            dao.delete(user1);*/
         }
     }
 }

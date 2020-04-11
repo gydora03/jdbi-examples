@@ -15,35 +15,35 @@ import java.util.Optional;
 public interface UserDao {
 
     @SqlUpdate("""
-        CREATE TABLE user (
-            id IDENTITY PRIMARY KEY,
-            name VARCHAR NOT NULL,
-            username VARCHAR NOT NULL,
+        CREATE TABLE userTable (
+            id IDENTITY,
+            username VARCHAR NOT NULL UNIQUE,
             password VARCHAR NOT NULL,
+            name VARCHAR NOT NULL,
             email VARCHAR NOT NULL,
-            gender ENUM('MALE', 'FEMALE') NOT NULL,
-            dob DATE NOT NULL
-            enabled BOOLEAN NOT NULL
+            gender VARCHAR NOT NULL,
+            dob DATE NOT NULL,
+            enabled BIT NOT NULL
         )
         """
     )
 
     void createTable();
 
-    @SqlUpdate("INSERT INTO user VALUES (:id, :name, :username, :password, :email, :gender, :dob, :enabled)")
+    @SqlUpdate("INSERT INTO userTable VALUES (:id, :username, :password, :name, :email, :gender, :dob, :enabled)")
     @GetGeneratedKeys("id")
-    long insertUser(@BindBean User user);
+    Long insertUser(@BindBean User user);
 
-    @SqlQuery("SELECT * FROM user WHERE id = :id")
+    @SqlQuery("SELECT * FROM userTable WHERE id = :id")
     Optional<User> findById(@Bind("id") long id);
 
-    @SqlQuery("SELECT * FROM user WHERE username = :username")
+    @SqlQuery("SELECT * FROM userTable WHERE username = :username")
     Optional<User> findByUsername(@Bind("username") String username);
 
-    @SqlUpdate("DELETE * FROM user WHERE id = :id")
-    void delete(@BindBean User user);
+    @SqlUpdate("DELETE FROM userTable WHERE username = :U.username")
+    void delete(@BindBean("U") User user);
 
-    @SqlQuery("SELECT * FROM user")
+    @SqlQuery("SELECT * FROM userTable")
     List<User> list();
 
 }
