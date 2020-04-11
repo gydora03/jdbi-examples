@@ -40,8 +40,8 @@ public interface UserDao {
     @SqlQuery("SELECT * FROM userTable WHERE username = :username")
     Optional<User> findByUsername(@Bind("username") String username);
 
-    @SqlUpdate("DELETE FROM userTable WHERE username = :U.username")
-    void delete(@BindBean("U") User user);
+    @SqlUpdate("DELETE FROM userTable WHERE username = :username")
+    void delete(@BindBean User user);
 
     @SqlQuery("SELECT * FROM userTable")
     List<User> list();
